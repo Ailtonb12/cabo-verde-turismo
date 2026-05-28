@@ -545,7 +545,7 @@ function renderOfertas() {
       </div>
       ${idx === 2 ? `
       <div class="ad-container ad-card">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0000000000000000" data-ad-slot="0000000000" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>` : ''}`
     }).join('')
