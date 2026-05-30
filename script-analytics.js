@@ -1,5 +1,5 @@
 // ===================== ANALYTICS ENGINE =====================
-const ANALYTICS_API = 'http://localhost:3001/api'
+const ANALYTICS_API = 'http://localhost:3002/api'
 
 const Analytics = {
   visitorId: localStorage.getItem('cv_visitor_id') || crypto.randomUUID(),
@@ -213,7 +213,7 @@ async function renderAnalyticsDashboard() {
         <div class="analytics-code-block">
           <code>cd server<br>npm install<br>npm start</code>
         </div>
-        <p style="font-size:12px;color:#666;margin-top:16px">O servidor será iniciado em http://localhost:3001</p>
+        <p style="font-size:12px;color:#666;margin-top:16px">O servidor será iniciado em http://localhost:3002</p>
       </div>
     `
     return

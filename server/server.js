@@ -12,7 +12,7 @@ async function main() {
   console.log('[DB] SQLite database initialized')
 
   const app = express()
-  const PORT = process.env.PORT || 3001
+  const PORT = process.env.PORT || 3002
 
   app.use(cors({ origin: true }))
   app.use(express.json({ limit: '50kb' }))
@@ -283,13 +283,81 @@ async function main() {
     }
   })
 
+  // ─── MARKET PRICES ───
+  let priceHistory = {}
+
+  app.get('/api/precos', async (req, res) => {
+    try {
+      const exchangeRes = await fetch('https://open.er-api.com/v6/latest/EUR', { signal: AbortSignal.timeout(8000) })
+      const exchange = await exchangeRes.json()
+      const rateCVE = exchange.rates?.CVE || 110.0
+
+      const baseOffers = [
+        { id: 0, titulo: 'Escapada ao Sal', precoBase: 599 },
+        { id: 1, titulo: 'Aventura no Fogo', precoBase: 799 },
+        { id: 2, titulo: 'Trekking Santo Antão', precoBase: 899 },
+        { id: 3, titulo: 'Pacote Boa Vista', precoBase: 649 },
+        { id: 4, titulo: 'Cultura em Mindelo', precoBase: 549 },
+        { id: 5, titulo: 'Ilhas Geminadas', precoBase: 1299 }
+      ]
+
+      const now = Date.now()
+      const hour = new Date().getHours()
+      const dayOfWeek = new Date().getDay()
+
+      const demandFactor = 0.85 + (hour >= 10 && hour <= 20 ? 0.1 : 0) + (dayOfWeek >= 5 ? 0.08 : 0)
+      const volatility = 0.92 + Math.random() * 0.16
+
+      const offers = baseOffers.map(o => {
+        if (!priceHistory[o.id]) {
+          priceHistory[o.id] = { lowest: o.precoBase * rateCVE * 0.008 }
+        }
+        const rawEuro = o.precoBase * demandFactor * volatility
+        const priceEUR = Math.round(rawEuro * 10) / 10
+        const priceCVE = Math.round(priceEUR * rateCVE)
+        const lowestEUR = Math.round(priceHistory[o.id].lowest * 10) / 10
+
+        if (priceEUR < lowestEUR) {
+          priceHistory[o.id].lowest = priceEUR
+        }
+
+        const savings = Math.round((1 - priceEUR / o.precoBase) * 100)
+        const priceChange = Math.round((Math.random() - 0.5) * 8)
+
+        return {
+          id: o.id,
+          titulo: o.titulo,
+          precoEUR: priceEUR,
+          precoCVE: priceCVE,
+          precoBase: o.precoBase,
+          lowestEUR: lowestEUR,
+          lowestCVE: Math.round(lowestEUR * rateCVE),
+          savings: Math.min(Math.max(savings, 5), 60),
+          change: priceChange,
+          disponivel: true
+        }
+      })
+
+      res.json({
+        timestamp: now,
+        exchangeRate: rateCVE,
+        currency: 'EUR',
+        offers
+      })
+    } catch (err) {
+      console.error('[Precos] Error:', err.message)
+      res.status(500).json({ error: 'Erro ao buscar preços' })
+    }
+  })
+
   // ─── START ───
   app.listen(PORT, () => {
     console.log(`
 ╔══════════════════════════════════════════════════╗
 ║       🌍 CABO VERDE ANALYTICS SERVER            ║
 ║══════════════════════════════════════════════════║
-║  API:    http://localhost:${PORT}/api              ║
+║  API:    http://localhost:${PORT}/api/precos       ║
+║  Dashboard: http://localhost:${PORT}/api/stats/summary ║
 ║  Status: 🟢 Online                               ║
 ╚══════════════════════════════════════════════════╝
     `)

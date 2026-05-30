@@ -430,35 +430,47 @@ let precosAtuais = []
 let ofertasAtualizador = null
 let statusAtualizador = null
 let ultimaAtualizacao = null
+const PRICE_API = 'http://localhost:3002/api/precos'
+
+function formatarPrecoEUR(valor) {
+  return '€' + valor.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+}
+
+function formatarPrecoCVE(valor) {
+  return valor.toLocaleString('pt-PT') + ' CVE'
+}
 
 async function fetchPrecosOnline() {
   const status = document.getElementById('ofertaStatus')
   try {
-    const res = await fetch('https://open.er-api.com/v6/latest/EUR', { signal: AbortSignal.timeout(8000) })
+    const res = await fetch(PRICE_API, { signal: AbortSignal.timeout(10000) })
     if (!res.ok) throw new Error('HTTP ' + res.status)
     const json = await res.json()
-    if (json.rates) {
-      const factor = 1 + (Math.random() - 0.5) * 0.04
+    if (json.offers) {
       document.querySelector('.oferta-live-dot')?.classList.add('active')
       if (status) {
         status.textContent = 'Preços atualizados online — ' + new Date().toLocaleTimeString('pt-PT')
         status.style.color = '#4ade80'
       }
-      return json.rates.CVE ? json.rates.CVE * 0.0081 * factor : factor
+      return json
     }
-    throw new Error('Sem rates')
+    throw new Error('Sem dados')
   } catch {
     document.querySelector('.oferta-live-dot')?.classList.remove('active')
     if (status) {
       status.textContent = 'Última atualização: ' + new Date().toLocaleTimeString('pt-PT')
       status.style.color = '#ecad29'
     }
-    return 1 + (Math.random() - 0.5) * 0.06
+    return null
   }
 }
 
-function formatarPreco(valor) {
-  return '€' + valor.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+function atualizarStatus() {
+  const status = document.getElementById('ofertaStatus')
+  if (status && ultimaAtualizacao) {
+    const ago = Math.floor((Date.now() - ultimaAtualizacao) / 1000)
+    status.textContent = 'Preços atualizados há ' + (ago < 60 ? ago + 's' : Math.floor(ago / 60) + 'min') + ' — ' + new Date().toLocaleTimeString('pt-PT')
+  }
 }
 
 async function atualizarPrecos() {
@@ -468,26 +480,42 @@ async function atualizarPrecos() {
   const cards = grid.querySelectorAll('.oferta-card')
   if (!cards.length) return
 
-  const fator = await fetchPrecosOnline()
-  ultimaAtualizacao = Date.now()
+  const data = await fetchPrecosOnline()
+  if (!data) return
 
-  precosAtuais = ofertasData.map(o => ({
-    ...o,
-    precoAtual: Math.round(o.preco * fator)
-  }))
+  const status = document.getElementById('ofertaStatus')
+  if (status && data.timestamp) {
+    const ago = Math.floor((Date.now() - data.timestamp) / 1000)
+    status.textContent = `Mercado: €1 = ${data.exchangeRate} CVE · Preços actualizados há ${ago}s`
+  }
 
   cards.forEach((card, i) => {
-    if (i >= precosAtuais.length) return
-    const el = card.querySelector('.oferta-preco')
-    const atual = precosAtuais[i].precoAtual
-    if (el) {
-      const antigo = parseInt(el.textContent.replace(/[^\d]/g, ''))
-      el.textContent = formatarPreco(atual)
-      if (antigo && antigo !== atual) {
-        el.classList.remove('price-up', 'price-down')
-        void el.offsetWidth
-        el.classList.add(atual > antigo ? 'price-up' : 'price-down')
+    if (i >= data.offers.length) return
+    const offer = data.offers[i]
+    if (!offer) return
+
+    const precoEl = card.querySelector('.oferta-preco')
+    const tagEl = card.querySelector('.oferta-tag')
+    const lowestEl = card.querySelector('.oferta-lowest')
+    const changeEl = card.querySelector('.oferta-change')
+
+    if (precoEl) {
+      const novo = formatarPrecoEUR(offer.precoEUR)
+      const antigo = precoEl.textContent
+      precoEl.textContent = novo
+      if (antigo && antigo !== novo) {
+        precoEl.classList.remove('price-up', 'price-down')
+        void precoEl.offsetWidth
+        precoEl.classList.add(offer.change > 0 ? 'price-up' : 'price-down')
       }
+    }
+
+    if (tagEl) {
+      tagEl.textContent = offer.savings > 0 ? `-${offer.savings}%` : ''
+    }
+
+    if (lowestEl) {
+      lowestEl.textContent = `Mínimo mercado: ${formatarPrecoEUR(offer.lowestEUR)}`
     }
   })
 }
@@ -503,7 +531,7 @@ function renderOfertas() {
         <span class="oferta-live-dot"></span>
         <span class="oferta-live-text">AO VIVO</span>
       </div>
-      <span class="oferta-status-msg" id="ofertaStatus">A atualizar preços...</span>
+      <span class="oferta-status-msg" id="ofertaStatus">A atualizar preços de mercado...</span>
     </div>
   `
 
@@ -522,24 +550,28 @@ function renderOfertas() {
   grid.innerHTML = statusHtml + skeletonHtml
 
   setTimeout(async () => {
-    const fator = await fetchPrecosOnline()
-    ultimaAtualizacao = Date.now()
+    const data = await fetchPrecosOnline()
+    if (!data) {
+      grid.innerHTML = statusHtml + '<p style="text-align:center;color:#666;padding:40px">Servidor de preços offline. Inicie o servidor Node.js.</p>'
+      return
+    }
 
-    precosAtuais = ofertasData.map(o => ({
-      ...o,
-      precoAtual: Math.round(o.preco * fator)
-    }))
+    ultimaAtualizacao = data.timestamp
 
-    const ofertasHtml = precosAtuais.map((o, idx) => {
-      const afiliadoLink = 'https://www.booking.com/searchresults.html?aid=0000000&label=cv-oferta-' + idx + '&ss=Cabo+Verde'
+    const ofertasHtml = ofertasData.map((o, idx) => {
+      const offer = data.offers[idx]
+      const afiliadoLink = 'https://www.booking.com/searchresults.html?aid=7942621&label=cv-oferta-' + idx + '&ss=Cabo+Verde'
       return `
       <div class="oferta-card">
         <img class="oferta-card-img" src="${o.imagem}" alt="${o.titulo}" loading="lazy">
         <div class="oferta-card-body">
-          <span class="oferta-tag">${o.tag}</span>
+          <span class="oferta-tag">${offer?.savings > 0 ? `-${offer.savings}%` : o.tag}</span>
           <h3>${o.titulo}</h3>
-          <div class="oferta-preco">${formatarPreco(o.precoAtual)}</div>
+          <div class="oferta-preco">${offer ? formatarPrecoEUR(offer.precoEUR) : formatarPrecoEUR(o.preco)}</div>
+          ${offer ? `<div class="oferta-lowest">📉 Mínimo mercado: ${formatarPrecoEUR(offer.lowestEUR)}</div>` : ''}
+          ${offer ? `<div class="oferta-change ${offer.change > 0 ? 'price-up' : 'price-down'}">${offer.change > 0 ? '▲' : '▼'} ${Math.abs(offer.change)}% hoje</div>` : ''}
           <p>${o.desc}</p>
+          <div class="oferta-preco-cve">${offer ? formatarPrecoCVE(offer.precoCVE) : ''}</div>
           <a href="${afiliadoLink}" target="_blank" rel="noopener sponsored" class="oferta-afiliado">Reservar esta oferta</a>
         </div>
       </div>
@@ -551,7 +583,14 @@ function renderOfertas() {
     }).join('')
     grid.innerHTML = statusHtml + ofertasHtml
 
-    atualizarStatus()
+    if (data) {
+      const status = document.getElementById('ofertaStatus')
+      if (status) {
+        const ago = Math.floor((Date.now() - data.timestamp) / 1000)
+        status.textContent = `Mercado: €1 = ${data.exchangeRate} CVE · Preços actualizados há ${ago}s`
+        status.style.color = '#4ade80'
+      }
+    }
   }, 600)
 }
 
@@ -593,14 +632,13 @@ document.getElementById('vooBtn').addEventListener('click', () => {
 
   const precoBase = Math.floor(Math.random() * 200 + 250)
   const precos = ['TAP Air Portugal', 'Ryanair', 'Cabo Verde Airlines', 'TUI Fly']
-  const afiliados = ['https://www.skyscanner.pt/g/referrals/v1/flights/search?origin=' + encodeURIComponent(origem) + '&destination=' + encodeURIComponent(destino), 'https://www.booking.com/flights/index.html?aid=0000000&label=cv-turismo']
   const resultados = document.getElementById('voosResultados')
   
   resultados.innerHTML = precos.map((cia, i) => {
     const preco = precoBase + Math.floor(Math.random() * 100) + i * 30
     const horas = Math.floor(Math.random() * 3 + 4)
     const minutos = Math.floor(Math.random() * 60)
-    const link = i === 0 ? afiliados[0] : afiliados[1]
+    const params = new URLSearchParams({ origem, destino, ida, volta, passageiros, cia, preco: preco * passageiros })
     return `
       <div class="voo-resultado-card">
         <div class="voo-info">
@@ -610,12 +648,47 @@ document.getElementById('vooBtn').addEventListener('click', () => {
         </div>
         <div>
           <div class="voo-preco">€${preco * passageiros}</div>
-          <a href="${link}" target="_blank" rel="noopener sponsored" class="voo-reservar">Reservar</a>
+          <button class="voo-reservar" data-params='${JSON.stringify({ origem, destino, ida, volta, passageiros, cia, preco: preco * passageiros })}'>Reservar</button>
         </div>
       </div>
     `
   }).join('')
   resultados.classList.add('show')
+
+  resultados.querySelectorAll('.voo-reservar').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const p = JSON.parse(btn.dataset.params)
+      const adModal = document.createElement('div')
+      adModal.className = 'voo-ad-overlay'
+      adModal.innerHTML = `
+        <div class="voo-ad-modal">
+          <button class="voo-ad-close">&times;</button>
+          <h3 style="font-family:'Oswald',sans-serif;font-size:22px;letter-spacing:1px;margin:0 0 8px;color:#fff">✈️ ${p.origem} → ${p.destino}</h3>
+          <p style="font-size:13px;color:#999;margin:0 0 4px">${p.ida} a ${p.volta} · ${p.passageiros} passageiro(s) · ${p.cia}</p>
+          <p style="font-size:11px;color:#666;margin:0 0 16px">Anúncio — reserva segura via parceiro</p>
+          <div class="ad-container" style="max-width:100%;margin-bottom:16px">
+            <ins class="adsbygoogle" style="display:block;text-align:center" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          </div>
+          <p style="font-size:11px;color:#FFFFFF88;margin:0 0 12px">Apoias o nosso site ao reservar através deste link. O preço é o mesmo para ti.</p>
+          <a href="https://www.booking.com/flights/index.html?aid=7942621&label=cv-turismo-${encodeURIComponent(p.origem)}-${encodeURIComponent(p.destino)}" target="_blank" rel="noopener sponsored" style="display:inline-block;padding:12px 28px;background:#ecad29;color:#000;border-radius:8px;font-weight:700;text-decoration:none;font-size:14px">✅ Continuar para a Reserva</a>
+        </div>
+      `
+      document.body.appendChild(adModal)
+      requestAnimationFrame(() => adModal.classList.add('show'))
+      try { (adsbygoogle = window.adsbygoogle || []).push({}) } catch (e) {}
+      adModal.querySelector('.voo-ad-close').addEventListener('click', () => {
+        adModal.classList.remove('show')
+        setTimeout(() => adModal.remove(), 300)
+      })
+      adModal.addEventListener('click', (e) => {
+        if (e.target === adModal) {
+          adModal.classList.remove('show')
+          setTimeout(() => adModal.remove(), 300)
+        }
+      })
+    })
+  })
 })
 
 // ===================== CONTACTO =====================
