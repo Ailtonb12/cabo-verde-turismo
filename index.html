@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cabo Verde - Turismo</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style-features.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4375557451351822" crossorigin="anonymous"></script>
 </head>
@@ -22,15 +23,20 @@
                 <path fill="#f7d116" d="m322.5 198.715 5.933 18.119 19.066.043-15.4 11.242 5.852 18.148-15.452-11.173-15.45 11.173 5.851-18.148-15.4-11.242 19.066-.043zm-88.168 28.646 5.933 18.121 19.066.043-15.4 11.242 5.852 18.147-15.452-11.172-15.45 11.172 5.851-18.147-15.4-11.242 19.066-.043zm176.336 0 5.933 18.121 19.066.043-15.4 11.242 5.852 18.147-15.452-11.172-15.45 11.172 5.851-18.147-15.4-11.242 19.066-.043zm-230.826 73.863 5.933 18.12 19.067.043-15.4 11.242 5.85 18.148-15.45-11.174-15.452 11.174 5.852-18.148-15.4-11.242 19.066-.043zm285.316 0 5.934 18.12 19.066.043-15.4 11.242 5.851 18.148-15.451-11.174-15.451 11.174 5.851-18.148-15.4-11.242 19.066-.043zm-285.316 100 5.933 18.119 19.067.044-15.4 11.242 5.85 18.148-15.45-11.173-15.452 11.173 5.852-18.148-15.4-11.242 19.066-.043zm285.316 0 5.934 18.119 19.066.044-15.4 11.242 5.851 18.148-15.451-11.173-15.451 11.173 5.851-18.148-15.4-11.242 19.066-.043zm-230.826 68.842 5.933 18.121 19.066.044-15.4 11.242 5.852 18.146-15.452-11.172-15.45 11.172 5.851-18.146-15.4-11.242 19.066-.044zm176.336 0 5.933 18.121 19.066.044-15.4 11.242 5.852 18.146-15.452-11.172-15.45 11.172 5.851-18.146-15.4-11.242 19.066-.044zM322.5 498.715l5.933 18.119 19.066.043-15.4 11.242 5.852 18.149-15.452-11.174-15.45 11.174 5.851-18.149-15.4-11.242 19.066-.043z"/>
             </svg>
         </div>
-        <div class="brand">Cabo Verde</div>
+        <div class="brand" data-i18n="general.cabo_verde">Cabo Verde</div>
     </div>
     <div class="nav-center">
-        <div class="nav-item active" data-page="home">Início</div>
-        <div class="nav-item" data-page="ilhas">Ilhas</div>
-        <div class="nav-item" data-page="destinos">Destinos</div>
-        <div class="nav-item" data-page="voos">Voos</div>
-        <div class="nav-item" data-page="ofertas">Ofertas</div>
-        <div class="nav-item" data-page="contacto">Contacto</div>
+        <div class="nav-item active" data-page="home" data-i18n="nav.home">Início</div>
+        <div class="nav-item" data-page="ilhas" data-i18n="nav.ilhas">Ilhas</div>
+        <div class="nav-item" data-page="destinos" data-i18n="nav.destinos">Destinos</div>
+        <div class="nav-item" data-page="voos" data-i18n="nav.voos">Voos</div>
+        <div class="nav-item" data-page="carros" data-i18n="nav.carros">Carros</div>
+        <div class="nav-item" data-page="experiencias" data-i18n="nav.experiencias">Experiências</div>
+        <div class="nav-item" data-page="ofertas" data-i18n="nav.ofertas">Ofertas</div>
+        <div class="nav-item" data-page="favoritos" data-i18n="nav.favoritos">Favoritos</div>
+        <div class="nav-item" data-page="anunciar" data-i18n="nav.anuncie">Anunciar</div>
+        <div class="nav-item" data-page="contacto" data-i18n="nav.contacto">Contacto</div>
+        <div class="nav-item" data-page="analytics" data-i18n="nav.analytics">Analytics</div>
     </div>
     <div class="nav-right">
         <div class="svg-container search-btn" id="searchBtn">
@@ -54,7 +60,7 @@
 <div class="search-overlay" id="searchOverlay">
     <div class="search-modal">
         <div class="search-header">
-            <h2>Pesquisar</h2>
+            <h2 data-i18n="search.title">Pesquisar</h2>
             <div class="svg-container close-btn" id="closeSearch">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -62,7 +68,7 @@
             </div>
         </div>
         <div class="search-input-wrapper">
-            <input type="text" id="searchInput" placeholder="Pesquisar ilhas, destinos, ofertas..." autofocus>
+            <input type="text" id="searchInput" placeholder="Pesquisar ilhas, destinos, ofertas..." autofocus data-i18n-placeholder="search.placeholder">
             <button id="searchGo">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -76,7 +82,7 @@
 <div class="user-overlay" id="userOverlay">
     <div class="user-modal">
         <div class="search-header">
-            <h2>Minha Conta</h2>
+            <h2 data-i18n="user.login_title">Minha Conta</h2>
             <div class="svg-container close-btn" id="closeUser">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -85,26 +91,26 @@
         </div>
         <div class="user-form" id="userFormContainer">
             <div class="user-tabs" id="userTabs">
-                <div class="user-tab active" data-tab="login">Entrar</div>
-                <div class="user-tab" data-tab="register">Registar</div>
+                <div class="user-tab active" data-tab="login" data-i18n="user.login">Entrar</div>
+                <div class="user-tab" data-tab="register" data-i18n="user.register">Registar</div>
             </div>
             <div id="loginForm" class="user-tab-content active">
-                <input type="email" id="loginEmail" placeholder="Email" class="user-input" autocomplete="email">
-                <input type="password" id="loginPassword" placeholder="Palavra-passe" class="user-input" autocomplete="current-password">
-                <button class="user-submit" id="loginBtn">Entrar</button>
-                <p class="user-small">Área de membros para reservar voos e ofertas exclusivas</p>
+                <input type="email" id="loginEmail" placeholder="Email" class="user-input" autocomplete="email" data-i18n-placeholder="user.email">
+                <input type="password" id="loginPassword" placeholder="Palavra-passe" class="user-input" autocomplete="current-password" data-i18n-placeholder="user.password">
+                <button class="user-submit" id="loginBtn" data-i18n="user.login">Entrar</button>
+                <p class="user-small" data-i18n="user.no_account">Área de membros para reservar voos e ofertas exclusivas</p>
             </div>
             <div id="registerForm" class="user-tab-content">
-                <input type="text" id="registerName" placeholder="Nome completo" class="user-input" autocomplete="name">
-                <input type="email" id="registerEmail" placeholder="Email" class="user-input" autocomplete="email">
-                <input type="password" id="registerPassword" placeholder="Palavra-passe" class="user-input" autocomplete="new-password">
-                <button class="user-submit" id="registerBtn">Criar Conta</button>
+                <input type="text" id="registerName" placeholder="Nome completo" class="user-input" autocomplete="name" data-i18n-placeholder="user.name">
+                <input type="email" id="registerEmail" placeholder="Email" class="user-input" autocomplete="email" data-i18n-placeholder="user.email">
+                <input type="password" id="registerPassword" placeholder="Palavra-passe" class="user-input" autocomplete="new-password" data-i18n-placeholder="user.password">
+                <button class="user-submit" id="registerBtn" data-i18n="user.register">Criar Conta</button>
             </div>
             <div id="userLoggedIn" class="user-loggedin" style="display:none">
                 <div class="user-avatar" id="userAvatar"></div>
                 <h3 id="userDisplayName"></h3>
                 <p id="userDisplayEmail"></p>
-                <button class="user-submit user-logout-btn" id="logoutBtn">Terminar Sessão</button>
+                <button class="user-submit user-logout-btn" id="logoutBtn" data-i18n="user.logout">Terminar Sessão</button>
             </div>
         </div>
     </div>
@@ -112,7 +118,7 @@
 
 <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-        <div class="brand">Cabo Verde</div>
+        <div class="brand" data-i18n="general.cabo_verde">Cabo Verde</div>
         <div class="svg-container close-btn" id="closeMobile">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -120,12 +126,17 @@
         </div>
     </div>
     <div class="mobile-menu-items">
-        <div class="mobile-nav-item active" data-page="home">Início</div>
-        <div class="mobile-nav-item" data-page="ilhas">Ilhas</div>
-        <div class="mobile-nav-item" data-page="destinos">Destinos</div>
-        <div class="mobile-nav-item" data-page="voos">Voos</div>
-        <div class="mobile-nav-item" data-page="ofertas">Ofertas</div>
-        <div class="mobile-nav-item" data-page="contacto">Contacto</div>
+        <div class="mobile-nav-item active" data-page="home" data-i18n="nav.home">Início</div>
+        <div class="mobile-nav-item" data-page="ilhas" data-i18n="nav.ilhas">Ilhas</div>
+        <div class="mobile-nav-item" data-page="destinos" data-i18n="nav.destinos">Destinos</div>
+        <div class="mobile-nav-item" data-page="voos" data-i18n="nav.voos">Voos</div>
+        <div class="mobile-nav-item" data-page="carros" data-i18n="nav.carros">Carros</div>
+        <div class="mobile-nav-item" data-page="experiencias" data-i18n="nav.experiencias">Experiências</div>
+        <div class="mobile-nav-item" data-page="ofertas" data-i18n="nav.ofertas">Ofertas</div>
+        <div class="mobile-nav-item" data-page="favoritos" data-i18n="nav.favoritos">Favoritos</div>
+        <div class="mobile-nav-item" data-page="anunciar" data-i18n="nav.anuncie">Anunciar</div>
+        <div class="mobile-nav-item" data-page="contacto" data-i18n="nav.contacto">Contacto</div>
+        <div class="mobile-nav-item" data-page="analytics" data-i18n="nav.analytics">Analytics</div>
     </div>
 </div>
 
@@ -143,7 +154,7 @@
                     <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
                 </svg>
             </button>
-            <button class="discover">Descobrir Local</button>
+            <button class="discover" data-i18n="home.discover">Descobrir Local</button>
         </div>
     </div>
 
@@ -158,7 +169,7 @@
                     <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
                 </svg>
             </button>
-            <button class="discover">Descobrir Local</button>
+            <button class="discover" data-i18n="home.discover">Descobrir Local</button>
         </div>
     </div>
 
@@ -188,8 +199,8 @@
     <div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1590523278191-995cbcda646b?auto=format&fit=crop&w=1920&q=80')"></div>
     <div class="page-overlay"></div>
     <div class="page-content">
-        <h1 class="page-title">ILHAS DE CABO VERDE</h1>
-        <p class="page-subtitle">Descubra as 10 ilhas do arquipélago</p>
+        <h1 class="page-title" data-i18n="ilhas.title">ILHAS DE CABO VERDE</h1>
+        <p class="page-subtitle" data-i18n="ilhas.subtitle">Descubra as 10 ilhas do arquipélago</p>
         <div class="ad-container ad-horizontal">
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -202,8 +213,8 @@
     <div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80')"></div>
     <div class="page-overlay"></div>
     <div class="page-content">
-        <h1 class="page-title">DESTINOS TURÍSTICOS</h1>
-        <p class="page-subtitle">Os lugares mais lindos de Cabo Verde</p>
+        <h1 class="page-title" data-i18n="destinos.title">DESTINOS TURÍSTICOS</h1>
+        <p class="page-subtitle" data-i18n="destinos.subtitle">Os lugares mais lindos de Cabo Verde</p>
         <div class="ad-container ad-horizontal">
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -216,8 +227,8 @@
     <div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1920&q=80')"></div>
     <div class="page-overlay"></div>
     <div class="page-content">
-        <h1 class="page-title">VOOS</h1>
-        <p class="page-subtitle">Pesquise e reserve o seu voo para Cabo Verde</p>
+        <h1 class="page-title" data-i18n="voos.title">VOOS</h1>
+        <p class="page-subtitle" data-i18n="voos.subtitle">Pesquise e reserve o seu voo para Cabo Verde</p>
         <div class="ad-container ad-horizontal">
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -226,11 +237,11 @@
             <div class="voos-form">
                 <div class="voo-row">
                     <div class="voo-field">
-                        <label>Origem</label>
+                        <label data-i18n="voos.origem">Origem</label>
                         <input type="text" id="vooOrigem" placeholder="Cidade de partida" value="Lisboa">
                     </div>
                     <div class="voo-field">
-                        <label>Destino</label>
+                        <label data-i18n="voos.destino">Destino</label>
                         <select id="vooDestino">
                             <option value="Sal">Sal (SID)</option>
                             <option value="Boa Vista">Boa Vista (BVC)</option>
@@ -242,19 +253,19 @@
                 </div>
                 <div class="voo-row">
                     <div class="voo-field">
-                        <label>Data Ida</label>
+                        <label data-i18n="voos.data_ida">Data Ida</label>
                         <input type="date" id="vooIda">
                     </div>
                     <div class="voo-field">
-                        <label>Data Volta</label>
+                        <label data-i18n="voos.data_volta">Data Volta</label>
                         <input type="date" id="vooVolta">
                     </div>
                     <div class="voo-field">
-                        <label>Passageiros</label>
+                        <label data-i18n="voos.passageiros">Passageiros</label>
                         <input type="number" id="vooPassageiros" value="1" min="1" max="10">
                     </div>
                 </div>
-                <button class="voo-btn" id="vooBtn">Pesquisar Voos</button>
+                <button class="voo-btn" id="vooBtn" data-i18n="voos.pesquisar">Pesquisar Voos</button>
             </div>
             <div class="voos-resultados" id="voosResultados"></div>
         </div>
@@ -265,8 +276,8 @@
     <div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1920&q=80')"></div>
     <div class="page-overlay"></div>
     <div class="page-content">
-        <h1 class="page-title">OFERTAS ESPECIAIS</h1>
-        <p class="page-subtitle">Pacotes imperdíveis para Cabo Verde</p>
+        <h1 class="page-title" data-i18n="ofertas.title">OFERTAS ESPECIAIS</h1>
+        <p class="page-subtitle" data-i18n="ofertas.subtitle">Pacotes imperdíveis para Cabo Verde</p>
         <div class="ad-container ad-horizontal">
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -279,8 +290,8 @@
     <div class="page-bg" style="background-image:url('https://images.unsplash.com/photo-1470071459604-7b8ec44ffd0a?auto=format&fit=crop&w=1920&q=80')"></div>
     <div class="page-overlay"></div>
     <div class="page-content">
-        <h1 class="page-title">CONTACTO</h1>
-        <p class="page-subtitle">Estamos aqui para ajudar</p>
+        <h1 class="page-title" data-i18n="contacto.title">CONTACTO</h1>
+        <p class="page-subtitle" data-i18n="contacto.subtitle">Estamos aqui para ajudar</p>
         <div class="contacto-container">
             <div class="contacto-info">
                 <div class="contacto-item">
@@ -297,23 +308,41 @@
                 </div>
             </div>
             <form class="contacto-form" id="contactoForm">
-                <input type="text" placeholder="Seu nome" required>
-                <input type="email" placeholder="Seu email" required>
+                <input type="text" placeholder="Seu nome" required data-i18n-placeholder="contacto.form_name">
+                <input type="email" placeholder="Seu email" required data-i18n-placeholder="contacto.form_email">
                 <select required>
-                    <option value="">Assunto</option>
-                    <option>Reservas</option>
-                    <option>Informações</option>
-                    <option>Reclamação</option>
-                    <option>Outro</option>
+                    <option value="" data-i18n="contacto.form_assunto">Assunto</option>
+                    <option data-i18n="contacto.subject_reservas">Reservas</option>
+                    <option data-i18n="contacto.subject_info">Informações</option>
+                    <option data-i18n="contacto.subject_reclamacao">Reclamação</option>
+                    <option data-i18n="contacto.subject_outro">Outro</option>
                 </select>
-                <textarea rows="5" placeholder="A sua mensagem" required></textarea>
-                <button type="submit">Enviar Mensagem</button>
+                <textarea rows="5" placeholder="A sua mensagem" required data-i18n-placeholder="contacto.form_mensagem"></textarea>
+                <button type="submit" data-i18n="contacto.form_enviar">Enviar Mensagem</button>
             </form>
+        </div>
+        <div class="ad-container ad-horizontal" style="margin-top:24px">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+</div>
+
+<div class="page analytics-page" id="page-analytics">
+    <div class="page-content">
+        <div id="analyticsDashboard" class="analytics-dashboard-container"></div>
+        <div class="ad-container ad-horizontal" style="margin-top:24px">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 </div>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="./i18n/i18n.js"></script>
 <script src="./script.js"></script>
+<script src="./script-features.js"></script>
+<script src="./script-analytics.js"></script>
 </body>
 </html>

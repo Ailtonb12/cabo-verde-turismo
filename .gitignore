@@ -1,1 +1,6 @@
 rg.exe
+
+# Server
+server/node_modules/
+server/analytics.db
+server/email-config.json

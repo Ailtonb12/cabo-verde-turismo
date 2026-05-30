@@ -1,0 +1,16 @@
+{
+  "nav": { "home": "Inísiu", "ilhas": "Ilhas", "destinos": "Destinu", "voos": "Vóos", "carros": "Karru", "experiencias": "Experiências", "ofertas": "Ofertas", "contacto": "Kontátu", "favoritos": "Favoritus", "anuncie": "Anunsiá", "minha_conta": "Nha konto", "minhas_reservas": "Nhas reservas", "terminar_sessao": "Sai", "pesquisar": "Peskisá" },
+  "search": { "title": "Peskisá", "placeholder": "Peskisá ilhas, destinus...", "no_results": "Nada atxá.", "destino": "Destinu", "checkin": "Entrada", "checkout": "Saída", "hospedes": "Hóspedis", "buscar": "Peskisá" },
+  "user": { "login": "Entrá", "register": "Rejistá", "email": "Email", "password": "Palavra-passi", "name": "Nómi kumpretu", "phone": "Tilifóni", "login_title": "Entrá ou kria konto", "login_subtitle": "Ponbu email", "continue": "Kontinua", "or": "ó", "google": "Kontinua ku Google", "logout": "Sai", "recover_password": "Rikuperá palavra-passi", "new_password": "Palavra-passi nova", "confirm_password": "Konfirmá", "send_code": "Manda kódigu", "verify_code": "Verifiká", "code_sent": "Manda kódigu pa {{email}}", "password_changed": "Palavra-passi mudadu!", "register_success": "Konta kriadu!", "login_success": "Bem-vindu {{name}}!", "invalid_credentials": "Email ó palavra-passi erradu.", "password_short": "Pelo menus 6 karáteris." },
+  "home": { "discover": "Diskubrí", "bookmark": "Garda", "slide_of": "di" },
+  "ilhas": { "title": "ILHAS DI KABU VERDI", "subtitle": "Diskubrí 10 ilhas" },
+  "destinos": { "title": "DESTINUS TURÍSTIKUS", "subtitle": "Lugaris más líndus" },
+  "voos": { "title": "VÓOS", "subtitle": "Rezerva bu vóu", "origem": "Origem", "destino": "Destinu", "data_ida": "Bá", "data_volta": "Voltá", "passageiros": "Pasajerus", "pesquisar": "Peskisá" },
+  "carros": { "title": "ALUGUER DI KARRUS", "subtitle": "Esplorá Kabu Verdi libri", "alugar": "Alugá", "por_dia": "/ dia", "passageiros": "pasajerus", "lugares": "Lugaris", "categoria": "Katiguria", "disponiveis": "karrus disponivel", "reservar": "Rezerva", "cve": "CVE" },
+  "experiencias": { "title": "EXPERIÊNCIAS", "subtitle": "Aventuras inxkidissível", "reservar": "Rezerva", "por_pessoa": "/ pessoa", "duracao": "Durason", "participantes": "Partisipantis" },
+  "ofertas": { "title": "OFERTAS SPESIAL", "subtitle": "Pakotis imperdível", "ao_vivo": "NA MÓ", "precos_atualizados": "Presu atualizadu — {{time}}", "ultima_atualizacao": "Últimu atualizason: {{time}}", "reservar_oferta": "Rezerva" },
+  "contacto": { "title": "KONTÁTU", "subtitle": "Nu sta li pa djudá", "form_name": "Bu nómi", "form_email": "Bu email", "form_assunto": "Asuntu", "form_mensagem": "Bu mensajen", "form_enviar": "Manda" },
+  "favoritos": { "title": "Nhas Favoritus", "empty": "Nenhum favoritu", "login_required": "Entrá", "explorar": "Esplorá" },
+  "footer": { "description": "Bu porta pa Kabu Verdi.", "explore": "Esplorá", "contact": "Kontátu", "follow": "Sigi-nu", "rights": "Todus direitus reservadu." },
+  "general": { "loading": "Karregandu...", "error": "Eru.", "save": "Salvá", "cancel": "Kanselá", "back": "Voltá", "close": "Fexá", "view_all": "Odjá tudu", "cabo_verde": "Kabo Verdi" }
+}
