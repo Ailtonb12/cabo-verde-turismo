@@ -777,13 +777,13 @@
 /* ===== FOOTER MINIMAL — Android/iOS ===== */
 @media (max-width: 768px) {
   .cv-full-footer {
-    padding: 8px 0 4px;
-    max-height: 18vh;
-    font-size: 10px;
+    padding: 12px 0 8px;
+    max-height: 24vh;
+    font-size: 11px;
   }
   .cv-full-footer .footer-grid {
-    gap: 6px;
-    margin-bottom: 4px;
+    gap: 10px;
+    margin-bottom: 8px;
   }
   .cv-full-footer .footer-links,
   .cv-full-footer .footer-contact,
@@ -791,43 +791,44 @@
     display: none;
   }
   .cv-full-footer .footer-brand h3 {
-    font-size: 12px;
+    font-size: 14px;
   }
   .cv-full-footer .footer-brand p {
-    font-size: 9px;
-    max-width: 140px;
+    font-size: 10px;
+    max-width: 180px;
   }
   .cv-full-footer .footer-bottom {
-    padding-top: 4px;
+    padding-top: 6px;
   }
   .cv-full-footer .footer-bottom p {
-    font-size: 8px;
+    font-size: 9px;
   }
   .cv-full-footer .footer-lang-btn {
-    font-size: 7px;
-    padding: 0 3px;
+    font-size: 9px;
+    padding: 1px 5px;
   }
   .cv-full-footer .footer-inner {
-    padding: 0 10px;
+    padding: 0 14px;
   }
 }
 
 @media (max-width: 480px) {
   .cv-full-footer {
-    padding: 4px 0 2px;
-    max-height: 14vh;
+    padding: 8px 0 4px;
+    max-height: 18vh;
   }
   .cv-full-footer .footer-brand h3 {
-    font-size: 10px;
+    font-size: 12px;
   }
   .cv-full-footer .footer-brand p {
-    display: none;
+    display: block;
+    font-size: 9px;
   }
   .cv-full-footer .footer-grid {
-    gap: 3px;
-    margin-bottom: 2px;
+    gap: 6px;
+    margin-bottom: 4px;
   }
   .cv-full-footer .footer-bottom p {
-    font-size: 7px;
+    font-size: 8px;
   }
 }
