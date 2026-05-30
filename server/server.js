@@ -3,9 +3,13 @@ const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 const path = require('path')
 const UAParser = require('ua-parser-js')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const { initDatabase, queries } = require('./database')
 const { initTransporter, isReady, sendReport, sendTestEmail } = require('./email-service')
 const { startScheduler, restartScheduler } = require('./scheduler')
+
+const JWT_SECRET = process.env.JWT_SECRET || 'cabo-verde-secret-key-2026'
 
 async function main() {
   await initDatabase()
@@ -17,12 +21,75 @@ async function main() {
   app.use(cors({ origin: true }))
   app.use(express.json({ limit: '50kb' }))
 
+  // Serve frontend static files (index.html, css, js, assets, i18n)
+  app.use(express.static(path.join(__dirname, '..')))
+
   const apiLimiter = rateLimit({
-    windowMs: 60 * 1000,
+    windowMs: 15 * 60 * 1000,
     max: 100,
     message: { error: 'Muitos pedidos. Tenta novamente mais tarde.' }
   })
   app.use('/api/', apiLimiter)
+
+  const authLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 10, // 10 attempts
+    message: { error: 'Demasiadas tentativas. Tenta novamente dentro de uma hora.' }
+  })
+  app.use('/api/login', authLimiter)
+  app.use('/api/register', authLimiter)
+
+  // ─── AUTHENTICATION ───
+  app.post('/api/register', async (req, res) => {
+    try {
+      const { name, email, password } = req.body
+      if (!name || !email || !password) return res.status(400).json({ error: 'Todos os campos são obrigatórios' })
+
+      const existingUser = queries.getUserByEmail(email)
+      if (existingUser) return res.status(400).json({ error: 'Este email já está registado' })
+
+      const hashedPassword = await bcrypt.hash(password, 10)
+      const user = queries.createUser(name, email, hashedPassword)
+
+      const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' })
+      res.json({ ok: true, user: { id: user.id, name: user.name, email: user.email }, token })
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
+  })
+
+  app.post('/api/login', async (req, res) => {
+    try {
+      const { email, password } = req.body
+      if (!email || !password) return res.status(400).json({ error: 'Email e palavra-passe são obrigatórios' })
+
+      const user = queries.getUserByEmail(email)
+      if (!user) return res.status(400).json({ error: 'Credenciais inválidas' })
+
+      const isMatch = await bcrypt.compare(password, user.password)
+      if (!isMatch) return res.status(400).json({ error: 'Credenciais inválidas' })
+
+      const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' })
+      res.json({ ok: true, user: { id: user.id, name: user.name, email: user.email }, token })
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
+  })
+
+  app.get('/api/me', (req, res) => {
+    try {
+      const token = req.headers.authorization?.split(' ')[1]
+      if (!token) return res.status(401).json({ error: 'Não autorizado' })
+
+      const decoded = jwt.verify(token, JWT_SECRET)
+      const user = queries.getUserByEmail(decoded.email)
+      if (!user) return res.status(404).json({ error: 'Utilizador não encontrado' })
+
+      res.json({ ok: true, user: { id: user.id, name: user.name, email: user.email } })
+    } catch (err) {
+      res.status(401).json({ error: 'Sessão expirada' })
+    }
+  })
 
   // ─── EMAIL CONFIG STORED IN-APP ───
   let emailConfig = {}
@@ -355,7 +422,6 @@ async function main() {
       res.status(500).json({ error: 'Erro ao buscar preços' })
     }
   })
-
   // ─── START ───
   app.listen(PORT, () => {
     console.log(`

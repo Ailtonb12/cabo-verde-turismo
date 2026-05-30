@@ -1,5 +1,6 @@
 // ===================== ANALYTICS ENGINE =====================
-const ANALYTICS_API = 'http://localhost:3002/api'
+const IS_LOCALHOST = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+const ANALYTICS_API = IS_LOCALHOST ? 'http://localhost:3002/api' : '/api'
 
 const Analytics = {
   visitorId: localStorage.getItem('cv_visitor_id') || crypto.randomUUID(),
@@ -29,10 +30,11 @@ const Analytics = {
 
   async track(type, data = {}) {
     try {
+      const activePage = document.querySelector('.page.active')?.id?.replace('page-', '') || 'home'
       const payload = {
         visitorId: this.visitorId,
         sessionId: this.sessionId,
-        page: window.location.pathname.split('/').pop() || 'index.html',
+        page: activePage,
         title: document.title,
         referrer: document.referrer || '',
         language: navigator.language,

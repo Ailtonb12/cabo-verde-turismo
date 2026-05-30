@@ -86,10 +86,25 @@ function init() {
   const detailsActive = detailsEven ? "#details-even" : "#details-odd"
   const detailsInactive = detailsEven ? "#details-odd" : "#details-even"
   const { innerHeight: height, innerWidth: width } = window
-  offsetTop = height - 430
-  offsetLeft = width - 830
 
-  gsap.set("#pagination", { top: offsetTop + 330, left: offsetLeft, y: 200, opacity: 0, zIndex: 60 })
+  const isMobile = width < 768
+  if (isMobile) {
+    offsetTop = height - 250
+    offsetLeft = Math.max(16, width - 340)
+    cardWidth = 100
+    cardHeight = 150
+    gap = 16
+    numberSize = 30
+  } else {
+    offsetTop = height - 430
+    offsetLeft = width - 830
+    cardWidth = 200
+    cardHeight = 300
+    gap = 40
+    numberSize = 50
+  }
+
+  gsap.set("#pagination", { top: isMobile ? height - 60 : offsetTop + 330, left: isMobile ? Math.max(16, offsetLeft) : offsetLeft, y: 200, opacity: 0, zIndex: 60 })
   gsap.set("nav", { y: -200, opacity: 0 })
   gsap.set(getCard(active), { x: 0, y: 0, width: window.innerWidth, height: window.innerHeight })
   gsap.set(getCardContent(active), { x: 0, y: 0, opacity: 0 })
@@ -100,7 +115,8 @@ function init() {
   gsap.set(`${detailsInactive} .title-2`, { y: 100 })
   gsap.set(`${detailsInactive} .desc`, { y: 50 })
   gsap.set(`${detailsInactive} .cta`, { y: 60 })
-  gsap.set(".progress-sub-foreground", { width: 500 * (1 / order.length) * (active + 1) })
+  const progressW = isMobile ? width - 100 : 500
+  gsap.set(".progress-sub-foreground", { width: progressW * (1 / order.length) * (active + 1) })
 
   rest.forEach((i, index) => {
     gsap.set(getCard(i), { x: offsetLeft + 400 + index * (cardWidth + gap), y: offsetTop, width: cardWidth, height: cardHeight, zIndex: 30, borderRadius: 10 })
@@ -158,7 +174,8 @@ function step() {
     gsap.to(getCardContent(active), { y: offsetTop + cardHeight - 10, opacity: 0, duration: 0.3, ease })
     gsap.to(getSliderItem(active), { x: 0, ease })
     gsap.to(getSliderItem(prv), { x: -numberSize, ease })
-    gsap.to(".progress-sub-foreground", { width: 500 * (1 / order.length) * (active + 1), ease })
+    const pw = window.innerWidth < 768 ? window.innerWidth - 100 : 500
+    gsap.to(".progress-sub-foreground", { width: pw * (1 / order.length) * (active + 1), ease })
 
     gsap.to(getCard(active), {
       x: 0, y: 0, ease, width: window.innerWidth, height: window.innerHeight, borderRadius: 0,
@@ -245,7 +262,8 @@ function stepBack() {
     gsap.to(getCardContent(active), { y: offsetTop + cardHeight - 10, opacity: 0, duration: 0.3, ease })
     gsap.to(getSliderItem(active), { x: 0, ease })
     gsap.to(getSliderItem(prv), { x: -numberSize, ease })
-    gsap.to(".progress-sub-foreground", { width: 500 * (1 / order.length) * (active + 1), ease })
+    const pw2 = window.innerWidth < 768 ? window.innerWidth - 100 : 500
+    gsap.to(".progress-sub-foreground", { width: pw2 * (1 / order.length) * (active + 1), ease })
 
     gsap.to(getCard(active), {
       x: 0, y: 0, ease, width: window.innerWidth, height: window.innerHeight, borderRadius: 0,
@@ -338,14 +356,14 @@ function navigateTo(pageId) {
 }
 
 navItems.forEach(item => {
-  item.addEventListener('click', () => navigateTo(item.dataset.page))
+  item.addEventListener('click', () => window.navigateTo(item.dataset.page))
 })
 
 // Mobile menu items
 document.querySelectorAll('.mobile-nav-item').forEach(item => {
   item.addEventListener('click', () => {
     document.getElementById('mobileMenu').classList.remove('show')
-    navigateTo(item.dataset.page)
+    window.navigateTo(item.dataset.page)
   })
 })
 
@@ -436,7 +454,10 @@ let precosAtuais = []
 let ofertasAtualizador = null
 let statusAtualizador = null
 let ultimaAtualizacao = null
-const PRICE_API = 'http://localhost:3002/api/precos'
+const IS_LOCALHOST = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+const BASE_API = IS_LOCALHOST ? 'http://localhost:3002/api' : '/api'
+
+const PRICE_API = `${BASE_API}/precos`
 
 function formatarPrecoEUR(valor) {
   return '€' + valor.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
@@ -848,35 +869,63 @@ const userDisplayName = document.getElementById('userDisplayName')
 const userDisplayEmail = document.getElementById('userDisplayEmail')
 const userAvatar = document.getElementById('userAvatar')
 
-let usuarioAtual = JSON.parse(localStorage.getItem('cv_user') || 'null')
+const AUTH_API = BASE_API
 
-function salvarSessao(u) {
+let usuarioAtual = JSON.parse(localStorage.getItem('cv_user') || 'null')
+let tokenAtual = localStorage.getItem('cv_token') || null
+
+async function verificarSessao() {
+  if (!tokenAtual) return
+  try {
+    const res = await fetch(`${AUTH_API}/me`, {
+      headers: { 'Authorization': `Bearer ${tokenAtual}` }
+    })
+    if (res.ok) {
+      const data = await res.json()
+      usuarioAtual = data.user
+      localStorage.setItem('cv_user', JSON.stringify(usuarioAtual))
+      atualizarUIUser()
+    } else {
+      terminarSessao()
+    }
+  } catch (e) {
+    console.error('Erro ao verificar sessão:', e)
+  }
+}
+
+function salvarSessao(u, token) {
   usuarioAtual = u
+  tokenAtual = token
   localStorage.setItem('cv_user', JSON.stringify(u))
+  localStorage.setItem('cv_token', token)
   atualizarUIUser()
 }
 
 function terminarSessao() {
   usuarioAtual = null
+  tokenAtual = null
   localStorage.removeItem('cv_user')
+  localStorage.removeItem('cv_token')
   atualizarUIUser()
   fecharUser()
 }
 
-function getContas() {
-  return JSON.parse(localStorage.getItem('cv_contas') || '[]')
-}
-
-function salvarContas(lista) {
-  localStorage.setItem('cv_contas', JSON.stringify(lista))
-}
-
 function abrirUser() {
   document.querySelectorAll('.user-tab-content input').forEach(i => i.value = '')
+  const msg = document.getElementById('authMessage')
+  if (msg) { msg.style.display = 'none'; msg.className = 'auth-message' }
   userOverlay.classList.add('show')
   atualizarUIUser()
 }
 function fecharUser() { userOverlay.classList.remove('show') }
+
+function showAuthMsg(text, type = 'error') {
+  const msg = document.getElementById('authMessage')
+  if (!msg) return
+  msg.textContent = text
+  msg.className = `auth-message ${type}`
+  msg.style.display = 'block'
+}
 
 document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginBtn').click() })
 document.getElementById('registerPassword').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('registerBtn').click() })
@@ -891,6 +940,8 @@ document.querySelectorAll('.user-tab').forEach(tab => {
     document.querySelectorAll('.user-tab-content').forEach(c => c.classList.remove('active'))
     tab.classList.add('active')
     document.getElementById(tab.dataset.tab + 'Form').classList.add('active')
+    const msg = document.getElementById('authMessage')
+    if (msg) msg.style.display = 'none'
   })
 })
 
@@ -899,11 +950,12 @@ function atualizarUIUser() {
     userTabs.style.display = 'none'
     document.querySelectorAll('.user-tab-content').forEach(c => c.style.display = 'none')
     userLoggedIn.style.display = 'flex'
-    userDisplayName.textContent = usuarioAtual.nome
+    userDisplayName.textContent = usuarioAtual.nome || usuarioAtual.name
     userDisplayEmail.textContent = usuarioAtual.email
-    userAvatar.textContent = usuarioAtual.nome.charAt(0).toUpperCase()
+    const initial = (usuarioAtual.nome || usuarioAtual.name || 'U').charAt(0).toUpperCase()
+    userAvatar.textContent = initial
     userBtn.innerHTML = `
-      <div class="user-avatar-mini">${usuarioAtual.nome.charAt(0).toUpperCase()}</div>
+      <div class="user-avatar-mini">${initial}</div>
     `
   } else {
     userTabs.style.display = 'flex'
@@ -921,47 +973,83 @@ function atualizarUIUser() {
 }
 
 // REGISTAR
-document.getElementById('registerBtn').addEventListener('click', () => {
+document.getElementById('registerBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('registerBtn')
   const nome = document.getElementById('registerName').value.trim()
   const email = document.getElementById('registerEmail').value.trim()
   const password = document.getElementById('registerPassword').value
 
-  if (!nome || !email || !password) { alert('Preencha todos os campos.'); return }
-  if (!email.includes('@')) { alert('Email inválido.'); return }
-  if (password.length < 6) { alert('A palavra-passe deve ter pelo menos 6 caracteres.'); return }
+  if (!nome || !email || !password) { showAuthMsg(i18n.t('user.fill_all')); return }
+  if (!email.includes('@')) { showAuthMsg(i18n.t('user.invalid_email')); return }
+  if (password.length < 6) { showAuthMsg(i18n.t('user.password_short')); return }
 
-  const contas = getContas()
-  if (contas.find(c => c.email === email)) { alert('Este email já está registado.'); return }
-
-  contas.push({ nome, email, password, criadaEm: Date.now() })
-  salvarContas(contas)
-  salvarSessao({ nome, email })
-  alert('Conta criada com sucesso!')
-  fecharUser()
+  try {
+    btn.disabled = true
+    const originalText = btn.textContent
+    btn.textContent = i18n.t('general.loading')
+    const res = await fetch(`${AUTH_API}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: nome, email, password })
+    })
+    const data = await res.json()
+    if (res.ok) {
+      salvarSessao(data.user, data.token)
+      showAuthMsg(i18n.t('user.register_success'), 'success')
+      setTimeout(fecharUser, 1500)
+    } else {
+      showAuthMsg(data.error || i18n.t('general.error'))
+      btn.disabled = false
+      btn.textContent = originalText
+    }
+  } catch (e) {
+    showAuthMsg(i18n.t('general.error'))
+    btn.disabled = false
+    btn.textContent = i18n.t('user.register')
+  }
 })
 
 // LOGIN
-document.getElementById('loginBtn').addEventListener('click', () => {
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('loginBtn')
   const email = document.getElementById('loginEmail').value.trim()
   const password = document.getElementById('loginPassword').value
 
-  if (!email || !password) { alert('Preencha todos os campos.'); return }
+  if (!email || !password) { showAuthMsg(i18n.t('user.fill_all')); return }
 
-  const contas = getContas()
-  const conta = contas.find(c => c.email === email && c.password === password)
-  if (!conta) { alert('Email ou palavra-passe incorretos.'); return }
-
-  salvarSessao({ nome: conta.nome, email: conta.email })
-  alert('Bem-vindo(a), ' + conta.nome + '!')
-  fecharUser()
+  try {
+    btn.disabled = true
+    const originalText = btn.textContent
+    btn.textContent = i18n.t('general.loading')
+    const res = await fetch(`${AUTH_API}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+    const data = await res.json()
+    if (res.ok) {
+      salvarSessao(data.user, data.token)
+      showAuthMsg(i18n.t('user.login_success', { name: data.user.name }), 'success')
+      setTimeout(fecharUser, 1500)
+    } else {
+      showAuthMsg(data.error || i18n.t('user.invalid_credentials'))
+      btn.disabled = false
+      btn.textContent = originalText
+    }
+  } catch (e) {
+    showAuthMsg(i18n.t('general.error'))
+    btn.disabled = false
+    btn.textContent = i18n.t('user.login')
+  }
 })
 
 // LOGOUT
 document.getElementById('logoutBtn').addEventListener('click', () => {
-  if (confirm('Tem a certeza que deseja terminar sessão?')) terminarSessao()
+  if (confirm(i18n.t('nav.terminar_sessao') + '?')) terminarSessao()
 })
 
 // INIT
+verificarSessao()
 atualizarUIUser()
 
 document.querySelectorAll('.discover').forEach(btn => {

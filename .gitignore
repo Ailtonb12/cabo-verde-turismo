@@ -4,3 +4,4 @@ rg.exe
 server/node_modules/
 server/analytics.db
 server/email-config.json
+server/*.log

@@ -156,8 +156,8 @@ nav .svg-container:hover { opacity: 0.7; }
 .home-page .pagination > .arrow:hover { border-color: #ecad29; background: #ecad2922; }
 .home-page .pagination > .arrow:nth-child(2) { margin-left: 20px; }
 .home-page .pagination > .arrow svg { width: 24px; height: 24px; stroke-width: 2; color: #ffffff99; }
-.home-page .pagination .progress-sub-container { margin-left: 24px; z-index: 60; width: 500px; height: 50px; display: flex; align-items: center; }
-.home-page .pagination .progress-sub-container .progress-sub-background { width: 500px; height: 3px; background-color: #ffffff33; }
+.home-page .pagination .progress-sub-container { margin-left: 24px; z-index: 60; width: 500px; max-width: calc(100vw - 200px); height: 50px; display: flex; align-items: center; }
+.home-page .pagination .progress-sub-container .progress-sub-background { width: 100%; height: 3px; background-color: #ffffff33; }
 .home-page .pagination .progress-sub-container .progress-sub-background .progress-sub-foreground { height: 3px; background-color: #ecad29; }
 .home-page .pagination .slide-numbers { width: 50px; height: 50px; overflow: hidden; z-index: 60; position: relative; }
 .home-page .pagination .slide-numbers .item {
@@ -498,6 +498,12 @@ nav .svg-container:hover { opacity: 0.7; }
   letter-spacing: 1px; transition: all 0.3s; border-bottom: 2px solid transparent;
 }
 .user-tab.active { color: #ecad29; border-bottom-color: #ecad29; }
+.auth-message {
+  margin-bottom: 16px; padding: 10px 14px; border-radius: 8px; font-size: 13px;
+  display: none; transition: all 0.3s ease;
+}
+.auth-message.error { display: block; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+.auth-message.success { display: block; background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
 .user-tab-content { display: none; }
 .user-tab-content.active { display: flex; flex-direction: column; gap: 12px; }
 .user-input {
@@ -597,6 +603,10 @@ nav .svg-container:hover { opacity: 0.7; }
   .home-page .details > .cta { margin-top: 16px; flex-wrap: wrap; gap: 8px; }
   .home-page .details > .cta > .discover { margin-left: 0; }
 
+  .home-page .pagination .progress-sub-container { width: calc(100vw - 160px); max-width: calc(100vw - 80px); margin-left: 8px; }
+  .home-page .pagination > .arrow { width: 36px; height: 36px; }
+  .home-page .pagination > .arrow svg { width: 18px; height: 18px; }
+
   .page-content { padding: 70px 12px 16px; }
   .page-title { font-size: 24px; letter-spacing: 2px; }
   .page-subtitle { font-size: 12px; }
@@ -621,4 +631,31 @@ nav .svg-container:hover { opacity: 0.7; }
   .voo-resultado-card .voo-preco { font-size: 22px; }
 
   .voos-form { padding: 20px; }
+}
+
+/* ===== RESPONSIVE: VERY SMALL PHONES (max-width: 360px) ===== */
+@media (max-width: 360px) {
+  .home-page .details .title-1,
+  .home-page .details .title-2 { font-size: 22px; }
+  .home-page .details .title-box-1,
+  .home-page .details .title-box-2 { height: 30px; }
+  .home-page .details .place-box .text { font-size: 14px; }
+  .home-page .details > .desc { font-size: 11px; }
+
+  .page-title { font-size: 20px; }
+
+  .oferta-card-body .oferta-preco { font-size: 22px; }
+}
+
+/* ===== Safe area insets for iOS notched devices ===== */
+@supports (padding-top: env(safe-area-inset-top)) {
+  nav { padding-left: calc(36px + env(safe-area-inset-left)); padding-right: calc(36px + env(safe-area-inset-right)); }
+  .page-content { padding-left: calc(40px + env(safe-area-inset-left)); padding-right: calc(40px + env(safe-area-inset-right)); }
+  .mobile-menu { padding-left: calc(32px + env(safe-area-inset-left)); padding-right: calc(32px + env(safe-area-inset-right)); }
+}
+
+@supports (padding-top: constant(safe-area-inset-top)) {
+  nav { padding-left: calc(36px + constant(safe-area-inset-left)); padding-right: calc(36px + constant(safe-area-inset-right)); }
+  .page-content { padding-left: calc(40px + constant(safe-area-inset-left)); padding-right: calc(40px + constant(safe-area-inset-right)); }
+  .mobile-menu { padding-left: calc(32px + constant(safe-area-inset-left)); padding-right: calc(32px + constant(safe-area-inset-right)); }
 }

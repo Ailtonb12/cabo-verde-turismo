@@ -88,6 +88,16 @@ async function initDatabase() {
   `)
 
   db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      created_at DATETIME DEFAULT (datetime('now'))
+    )
+  `)
+
+  db.run(`
     CREATE TABLE IF NOT EXISTS feedback (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
@@ -99,6 +109,9 @@ async function initDatabase() {
     )
   `)
 
+  db.run(`
+    CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)
+  `)
   db.run(`
     CREATE INDEX IF NOT EXISTS idx_visitors_id ON visitors(visitor_id)
   `)
@@ -327,6 +340,15 @@ const queries = {
 
   unsubscribe(recipient) {
     query('UPDATE email_reports SET enabled = 0 WHERE recipient = ?', [recipient])
+  },
+
+  createUser(name, email, password) {
+    query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, password])
+    return this.getUserByEmail(email)
+  },
+
+  getUserByEmail(email) {
+    return getOne('SELECT * FROM users WHERE email = ?', [email])
   },
 
   getAnalyticsSnapshot() {

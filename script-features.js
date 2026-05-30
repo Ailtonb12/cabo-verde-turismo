@@ -939,19 +939,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
+  if (window.atualizarUIUser) {
+    const origUI = window.atualizarUIUser
+    window.atualizarUIUser = function(...args) {
+      origUI(...args)
+      updateAnalyticsNavVisibility()
+    }
+  }
+
   if (window.salvarSessao) {
     const origSalvar = window.salvarSessao
-    window.salvarSessao = function(u) {
-      origSalvar(u)
-      updateAnalyticsNavVisibility()
+    window.salvarSessao = function(...args) {
+      origSalvar(...args)
     }
   }
 
   if (window.terminarSessao) {
     const origTerminar = window.terminarSessao
-    window.terminarSessao = function() {
-      origTerminar()
-      updateAnalyticsNavVisibility()
+    window.terminarSessao = function(...args) {
+      origTerminar(...args)
     }
   }
 
