@@ -298,7 +298,13 @@ async function main() {
         { id: 2, titulo: 'Trekking Santo Antão', precoBase: 899 },
         { id: 3, titulo: 'Pacote Boa Vista', precoBase: 649 },
         { id: 4, titulo: 'Cultura em Mindelo', precoBase: 549 },
-        { id: 5, titulo: 'Ilhas Geminadas', precoBase: 1299 }
+        { id: 5, titulo: 'Roteiro Santiago Histórico', precoBase: 469 },
+        { id: 6, titulo: 'Paraíso Escondido Maio', precoBase: 529 },
+        { id: 7, titulo: 'São Nicolau Autêntico', precoBase: 449 },
+        { id: 8, titulo: 'Relax na Brava', precoBase: 399 },
+        { id: 9, titulo: 'Sal & Boa Vista Combo', precoBase: 949 },
+        { id: 10, titulo: 'Cabo Verde Completo', precoBase: 1899 },
+        { id: 11, titulo: 'Luxo no Sal', precoBase: 1499 }
       ]
 
       const now = Date.now()

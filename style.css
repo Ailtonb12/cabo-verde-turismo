@@ -344,6 +344,21 @@ nav .svg-container:hover { opacity: 0.7; }
   display: inline-block; background: #ef4444; color: #fff; font-size: 11px;
   padding: 2px 10px; border-radius: 99px; font-weight: 600; margin-bottom: 8px;
 }
+.oferta-card-body .oferta-ilha-badge {
+  display: inline-block; background: rgba(236,173,41,0.15); color: #ecad29;
+  font-size: 10px; padding: 2px 10px; border-radius: 99px; font-weight: 700;
+  border: 1px solid rgba(236,173,41,0.2); margin-bottom: 8px;
+}
+.oferta-card-body .oferta-tipo-badge {
+  display: inline-block; font-size: 10px; padding: 2px 10px;
+  border-radius: 99px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;
+}
+.oferta-card-body .oferta-tipo-badge.tipo-praia { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.2); }
+.oferta-card-body .oferta-tipo-badge.tipo-aventura { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+.oferta-card-body .oferta-tipo-badge.tipo-cultura { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.2); }
+.oferta-card-body .oferta-tipo-badge.tipo-natureza { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+.oferta-card-body .oferta-tipo-badge.tipo-combo { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+.oferta-card-body .oferta-tipo-badge.tipo-luxo { background: rgba(236,173,41,0.15); color: #f59e0b; border: 1px solid rgba(236,173,41,0.2); }
 .oferta-card-body .oferta-lowest { font-size: 11px; color: #22c55e; font-weight: 600; margin: 2px 0; }
 .oferta-card-body .oferta-change { font-size: 11px; font-weight: 700; margin: 2px 0; }
 .oferta-card-body .oferta-change.price-up { color: #22c55e; }
@@ -390,6 +405,16 @@ nav .svg-container:hover { opacity: 0.7; }
 .voo-ad-close:hover { color: #fff; }
 
 /* skeleton loading */
+.oferta-filtros {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; justify-content: center;
+}
+.oferta-filtro-btn {
+  padding: 6px 14px; border: 1px solid rgba(255,255,255,0.15); border-radius: 99px;
+  background: transparent; color: #FFFFFFAA; font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.oferta-filtro-btn:hover { border-color: #ecad29; color: #ecad29; }
+.oferta-filtro-btn.active { background: #ecad29; color: #000; border-color: #ecad29; }
 .oferta-skeleton { pointer-events: none; }
 .skeleton-img {
   width: 100%; height: 180px;

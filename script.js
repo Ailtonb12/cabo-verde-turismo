@@ -35,12 +35,18 @@ const destinosData = [
 ];
 
 let ofertasData = [
-    { titulo:'Escapada ao Sal', preco:599, desc:'7 noites no resort Riu Palace Santa Maria com tudo incluído. Praia, piscina, desportos náuticos e visita guiada às Salinas de Pedra de Lume.', imagem:'https://images.unsplash.com/photo-1753872789111-ebdf8cf78397?auto=format&fit=crop&w=600&q=60', tag:'-30%' },
-    { titulo:'Aventura no Fogo', preco:799, desc:'5 noites em São Filipe com guia para subida ao Pico do Fogo, visita à Chã das Caldeiras, prova de vinho vulcânico e jantar típico cabo-verdiano.', imagem:'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=60', tag:'-25%' },
-    { titulo:'Trekking Santo Antão', preco:899, desc:'8 noites com 6 dias de trekking guiado pelo Vale do Paúl, Cova, Ribeira Grande e Ponta do Sol. Alojamento em guesthouses locais.', imagem:'https://images.unsplash.com/photo-1715341762945-d053d5d76c55?auto=format&fit=crop&w=600&q=60', tag:'-20%' },
-    { titulo:'Pacote Boa Vista', preco:649, desc:'7 noites no Riu Karamboa tudo incluído. Praia de Santa Mónica, Deserto de Viana, observação de tartarugas e passeio de catamarã.', imagem:'https://upload.wikimedia.org/wikipedia/commons/c/c0/Chaves_Beach_in_Boa_Vista.jpg', tag:'-35%' },
-    { titulo:'Cultura em Mindelo', preco:549, desc:'5 noites no centro de Mindelo com visitas guiadas, música ao vivo no Café Royal, museu Cesária Évora e passeio à Baía das Gatas.', imagem:'https://upload.wikimedia.org/wikipedia/commons/f/fa/Portrait_of_Ces%C3%A1ria_%C3%89vora%2C_Mindelo.jpg', tag:'-15%' },
-    { titulo:'Ilhas Geminadas', preco:1299, desc:'15 noites por 3 ilhas: Sal (5 noites), Santiago (5 noites) e Santo Antão (5 noites). Inclui voos inter-ilhas, transfers e guia local.', imagem:'https://images.unsplash.com/photo-1590523278191-995cbcda646b?auto=format&fit=crop&w=600&q=60', tag:'-40%' },
+    { titulo:'Escapada ao Sal', preco:599, desc:'7 noites no resort Riu Palace Santa Maria com tudo incluído. Praia, piscina, desportos náuticos e visita guiada às Salinas de Pedra de Lume.', imagem:'https://images.unsplash.com/photo-1753872789111-ebdf8cf78397?auto=format&fit=crop&w=600&q=60', tag:'-30%', ilha:'Sal', tipo:'praia' },
+    { titulo:'Aventura no Fogo', preco:799, desc:'5 noites em São Filipe com guia para subida ao Pico do Fogo, visita à Chã das Caldeiras, prova de vinho vulcânico e jantar típico cabo-verdiano.', imagem:'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=60', tag:'-25%', ilha:'Fogo', tipo:'aventura' },
+    { titulo:'Trekking Santo Antão', preco:899, desc:'8 noites com 6 dias de trekking guiado pelo Vale do Paúl, Cova, Ribeira Grande e Ponta do Sol. Alojamento em guesthouses locais.', imagem:'https://images.unsplash.com/photo-1715341762945-d053d5d76c55?auto=format&fit=crop&w=600&q=60', tag:'-20%', ilha:'Santo Antão', tipo:'aventura' },
+    { titulo:'Pacote Boa Vista', preco:649, desc:'7 noites no Riu Karamboa tudo incluído. Praia de Santa Mónica, Deserto de Viana, observação de tartarugas e passeio de catamarã.', imagem:'https://upload.wikimedia.org/wikipedia/commons/c/c0/Chaves_Beach_in_Boa_Vista.jpg', tag:'-35%', ilha:'Boa Vista', tipo:'praia' },
+    { titulo:'Cultura em Mindelo', preco:549, desc:'5 noites no centro de Mindelo com visitas guiadas, música ao vivo no Café Royal, museu Cesária Évora e passeio à Baía das Gatas.', imagem:'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=60', tag:'-15%', ilha:'São Vicente', tipo:'cultura' },
+    { titulo:'Roteiro Santiago Histórico', preco:469, desc:'5 noites na Praia com visita à Cidade Velha (Património Mundial), Plateau, Mercado de Sucupira, e excursão ao interior da ilha.', imagem:'https://images.unsplash.com/photo-1590523278191-995cbcda646b?auto=format&fit=crop&w=600&q=60', tag:'-20%', ilha:'Santiago', tipo:'cultura' },
+    { titulo:'Paraíso Escondido Maio', preco:529, desc:'7 noites na ilha do Maio, praias desertas de areia branca, reserva natural das tartarugas, e relax total longe do turismo em massa.', imagem:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=60', tag:'-25%', ilha:'Maio', tipo:'praia' },
+    { titulo:'São Nicolau Autêntico', preco:449, desc:'6 noites em São Nicolau, caminhadas pelo Monte Gordo, visita à Ribeira Brava, praias vulcânicas e a famosa Festa do Queijo.', imagem:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=60', tag:'-20%', ilha:'São Nicolau', tipo:'natureza' },
+    { titulo:'Relax na Brava', preco:399, desc:'5 noites na ilha mais pequena de Cabo Verde. Natureza intocada, caminhadas entre flores, mergulho e a autêntica vida cabo-verdiana.', imagem:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=60', tag:'-30%', ilha:'Brava', tipo:'natureza' },
+    { titulo:'Sal & Boa Vista Combo', preco:949, desc:'10 noites: 5 no Sal + 5 na Boa Vista. Inclui voos inter-ilhas, transfers, e atividades selecionadas em cada ilha.', imagem:'https://images.unsplash.com/photo-1540202404-a2f29016b523?auto=format&fit=crop&w=600&q=60', tag:'-35%', ilha:'Multi-ilha', tipo:'combo' },
+    { titulo:'Cabo Verde Completo', preco:1899, desc:'21 noites por 5 ilhas: Sal, Santiago, Fogo, Santo Antão e São Vicente. Voo inter-ilhas, guia, transfers e regime de meia pensão.', imagem:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=60', tag:'-45%', ilha:'Multi-ilha', tipo:'combo' },
+    { titulo:'Luxo no Sal', preco:1499, desc:'7 noites no Meliá Tortuga Beach Resort, spa, golf, restaurante gourmet, e sunset cruise privativo com champanhe.', imagem:'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=600&q=60', tag:'-10%', ilha:'Sal', tipo:'luxo' },
 ];
 
 // ===================== HOME PAGE ANIMATION (original) =====================
@@ -480,7 +486,13 @@ async function fetchPrecosFallback() {
       { id: 2, titulo: 'Trekking Santo Antão', precoBase: 899 },
       { id: 3, titulo: 'Pacote Boa Vista', precoBase: 649 },
       { id: 4, titulo: 'Cultura em Mindelo', precoBase: 549 },
-      { id: 5, titulo: 'Ilhas Geminadas', precoBase: 1299 }
+      { id: 5, titulo: 'Roteiro Santiago Histórico', precoBase: 469 },
+      { id: 6, titulo: 'Paraíso Escondido Maio', precoBase: 529 },
+      { id: 7, titulo: 'São Nicolau Autêntico', precoBase: 449 },
+      { id: 8, titulo: 'Relax na Brava', precoBase: 399 },
+      { id: 9, titulo: 'Sal & Boa Vista Combo', precoBase: 949 },
+      { id: 10, titulo: 'Cabo Verde Completo', precoBase: 1899 },
+      { id: 11, titulo: 'Luxo no Sal', precoBase: 1499 }
     ]
 
     const offers = baseOffers.map(o => {
@@ -511,12 +523,17 @@ async function fetchPrecosFallback() {
     const rateCVE = 110
     return {
       timestamp: Date.now(), exchangeRate: rateCVE, currency: 'EUR',
-      offers: ofertasData.map((o, i) => ({
-        id: i, titulo: o.titulo, precoEUR: o.preco, precoCVE: Math.round(o.preco * rateCVE),
-        precoBase: o.preco, lowestEUR: Math.round(o.preco * 0.95),
-        lowestCVE: Math.round(o.preco * 0.95 * rateCVE),
-        savings: parseInt(o.tag?.replace('-', '') || '15'), change: 0
-      }))
+      offers: ofertasData.map((o, i) => {
+        const base = baseOffers[i]
+        return {
+          id: i, titulo: o.titulo, precoEUR: base ? base.precoBase : o.preco,
+          precoCVE: Math.round((base ? base.precoBase : o.preco) * rateCVE),
+          precoBase: base ? base.precoBase : o.preco,
+          lowestEUR: Math.round((base ? base.precoBase : o.preco) * 0.95),
+          lowestCVE: Math.round((base ? base.precoBase : o.preco) * 0.95 * rateCVE),
+          savings: parseInt(o.tag?.replace('-', '') || '15'), change: 0
+        }
+      })
     }
   }
 }
@@ -581,68 +598,94 @@ function renderOfertas() {
   if (grid.dataset.rendered) return
   grid.dataset.rendered = 'true'
 
-  const statusHtml = `
-    <div class="oferta-status-bar">
-      <div class="oferta-live-indicator">
-        <span class="oferta-live-dot"></span>
-        <span class="oferta-live-text">AO VIVO</span>
+  let filtroIlha = 'todas'
+
+  function render() {
+    const filtered = filtroIlha === 'todas' ? ofertasData : ofertasData.filter(o => o.ilha === filtroIlha)
+
+    const statusHtml = `
+      <div class="oferta-status-bar">
+        <div class="oferta-live-indicator">
+          <span class="oferta-live-dot"></span>
+          <span class="oferta-live-text">AO VIVO</span>
+        </div>
+        <span class="oferta-status-msg" id="ofertaStatus">A atualizar preços de mercado...</span>
       </div>
-      <span class="oferta-status-msg" id="ofertaStatus">A atualizar preços de mercado...</span>
-    </div>
-  `
-
-  const skeletonHtml = Array.from({ length: ofertasData.length }, () => `
-    <div class="oferta-card oferta-skeleton">
-      <div class="skeleton-img"></div>
-      <div class="oferta-card-body">
-        <div class="skeleton-line w-20"></div>
-        <div class="skeleton-line w-60"></div>
-        <div class="skeleton-line w-40"></div>
-        <div class="skeleton-line w-80"></div>
+      <div class="oferta-filtros">
+        <button class="oferta-filtro-btn ${filtroIlha === 'todas' ? 'active' : ''}" data-ilha="todas">🌍 Todas</button>
+        ${['Sal','Boa Vista','Santiago','Fogo','Santo Antão','São Vicente','Maio','São Nicolau','Brava','Multi-ilha'].map(ilha =>
+          `<button class="oferta-filtro-btn ${filtroIlha === ilha ? 'active' : ''}" data-ilha="${ilha}">${ilha}</button>`
+        ).join('')}
       </div>
-    </div>
-  `).join('')
+    `
 
-  grid.innerHTML = statusHtml + skeletonHtml
-
-  setTimeout(async () => {
-    const data = await fetchPrecosOnline()
-    ultimaAtualizacao = data.timestamp
-
-    const ofertasHtml = ofertasData.map((o, idx) => {
-      const offer = data.offers[idx]
-      const afiliadoLink = 'https://www.booking.com/searchresults.html?aid=7942621&label=cv-oferta-' + idx + '&ss=Cabo+Verde'
-      return `
-      <div class="oferta-card">
-        <img class="oferta-card-img" src="${o.imagem}" alt="${o.titulo}" loading="lazy">
+    const skeletonHtml = Array.from({ length: filtered.length }, () => `
+      <div class="oferta-card oferta-skeleton">
+        <div class="skeleton-img"></div>
         <div class="oferta-card-body">
-          <span class="oferta-tag">${offer?.savings > 0 ? `-${offer.savings}%` : o.tag}</span>
-          <h3>${o.titulo}</h3>
-          <div class="oferta-preco">${offer ? formatarPrecoEUR(offer.precoEUR) : formatarPrecoEUR(o.preco)}</div>
-          ${offer ? `<div class="oferta-lowest">📉 Mínimo mercado: ${formatarPrecoEUR(offer.lowestEUR)}</div>` : ''}
-          ${offer ? `<div class="oferta-change ${offer.change > 0 ? 'price-up' : 'price-down'}">${offer.change > 0 ? '▲' : '▼'} ${Math.abs(offer.change)}% hoje</div>` : ''}
-          <p>${o.desc}</p>
-          <div class="oferta-preco-cve">${offer ? formatarPrecoCVE(offer.precoCVE) : ''}</div>
-          <a href="${afiliadoLink}" target="_blank" rel="noopener sponsored" class="oferta-afiliado">Reservar esta oferta</a>
+          <div class="skeleton-line w-20"></div>
+          <div class="skeleton-line w-60"></div>
+          <div class="skeleton-line w-40"></div>
+          <div class="skeleton-line w-80"></div>
         </div>
       </div>
-      ${idx === 2 ? `
-      <div class="ad-container ad-card">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>` : ''}`
-    }).join('')
-    grid.innerHTML = statusHtml + ofertasHtml
+    `).join('')
 
-    if (data) {
-      const status = document.getElementById('ofertaStatus')
-      if (status) {
-        const ago = Math.floor((Date.now() - data.timestamp) / 1000)
-        status.textContent = `Mercado: €1 = ${data.exchangeRate} CVE · Preços actualizados há ${ago}s`
-        status.style.color = '#4ade80'
+    grid.innerHTML = statusHtml + skeletonHtml
+
+    setTimeout(async () => {
+      const data = await fetchPrecosOnline()
+      ultimaAtualizacao = data.timestamp
+
+      const ofertasHtml = filtered.map((o, idx) => {
+        const dataIdx = ofertasData.indexOf(o)
+        const offer = data.offers[dataIdx]
+        const afiliadoLink = 'https://www.booking.com/searchresults.html?aid=7942621&label=cv-oferta-' + dataIdx + '&ss=Cabo+Verde'
+        return `
+        <div class="oferta-card">
+          <img class="oferta-card-img" src="${o.imagem}" alt="${o.titulo}" loading="lazy">
+          <div class="oferta-card-body">
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+              <span class="oferta-tag">${offer?.savings > 0 ? `-${offer.savings}%` : o.tag}</span>
+              <span class="oferta-ilha-badge">${o.ilha}</span>
+              <span class="oferta-tipo-badge tipo-${o.tipo}">${o.tipo}</span>
+            </div>
+            <h3>${o.titulo}</h3>
+            <div class="oferta-preco">${offer ? formatarPrecoEUR(offer.precoEUR) : formatarPrecoEUR(o.preco)}</div>
+            ${offer ? `<div class="oferta-lowest">📉 Mínimo mercado: ${formatarPrecoEUR(offer.lowestEUR)}</div>` : ''}
+            ${offer ? `<div class="oferta-change ${offer.change > 0 ? 'price-up' : 'price-down'}">${offer.change > 0 ? '▲' : '▼'} ${Math.abs(offer.change)}% hoje</div>` : ''}
+            <p>${o.desc}</p>
+            <div class="oferta-preco-cve">${offer ? formatarPrecoCVE(offer.precoCVE) : ''}</div>
+            <a href="${afiliadoLink}" target="_blank" rel="noopener sponsored" class="oferta-afiliado">Reservar esta oferta</a>
+          </div>
+        </div>
+        ${idx === 2 ? `
+        <div class="ad-container ad-card">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4375557451351822" data-ad-slot="8501285043" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>` : ''}`
+      }).join('')
+      grid.innerHTML = statusHtml + ofertasHtml
+
+      grid.querySelectorAll('.oferta-filtro-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filtroIlha = btn.dataset.ilha
+          render()
+        })
+      })
+
+      if (data) {
+        const status = document.getElementById('ofertaStatus')
+        if (status) {
+          const ago = Math.floor((Date.now() - data.timestamp) / 1000)
+          status.textContent = `Mercado: €1 = ${data.exchangeRate} CVE · Preços actualizados há ${ago}s`
+          status.style.color = '#4ade80'
+        }
       }
-    }
-  }, 600)
+    }, 600)
+  }
+
+  render()
 }
 
 function atualizarStatus() {
