@@ -773,3 +773,61 @@
   .footer-grid { grid-template-columns: 1fr; }
   .carro-card-img, .exp-card-img { height: 160px; }
 }
+
+/* ===== FOOTER MINIMAL — Android/iOS ===== */
+@media (max-width: 768px) {
+  .cv-full-footer {
+    padding: 8px 0 4px;
+    max-height: 18vh;
+    font-size: 10px;
+  }
+  .cv-full-footer .footer-grid {
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .cv-full-footer .footer-links,
+  .cv-full-footer .footer-contact,
+  .cv-full-footer .footer-social {
+    display: none;
+  }
+  .cv-full-footer .footer-brand h3 {
+    font-size: 12px;
+  }
+  .cv-full-footer .footer-brand p {
+    font-size: 9px;
+    max-width: 140px;
+  }
+  .cv-full-footer .footer-bottom {
+    padding-top: 4px;
+  }
+  .cv-full-footer .footer-bottom p {
+    font-size: 8px;
+  }
+  .cv-full-footer .footer-lang-btn {
+    font-size: 7px;
+    padding: 0 3px;
+  }
+  .cv-full-footer .footer-inner {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cv-full-footer {
+    padding: 4px 0 2px;
+    max-height: 14vh;
+  }
+  .cv-full-footer .footer-brand h3 {
+    font-size: 10px;
+  }
+  .cv-full-footer .footer-brand p {
+    display: none;
+  }
+  .cv-full-footer .footer-grid {
+    gap: 3px;
+    margin-bottom: 2px;
+  }
+  .cv-full-footer .footer-bottom p {
+    font-size: 7px;
+  }
+}
